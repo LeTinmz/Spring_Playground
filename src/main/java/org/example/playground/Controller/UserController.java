@@ -5,13 +5,11 @@ import org.example.playground.Model.User;
 import org.example.playground.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+import java.util.Optional;
+@CrossOrigin(origins = "*") //
 @Controller
 public class UserController {
     private UserService userService;
@@ -27,6 +25,11 @@ public class UserController {
         return userService.sayHello();
     }
 
+        @RequestMapping("/first")
+        @ResponseBody
+        public Optional<User> getFirst(){
+            return userService.getFirst();
+        }
     @RequestMapping("/users")
     @ResponseBody
     public List<User> displayUserName() {

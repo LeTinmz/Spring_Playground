@@ -31,7 +31,13 @@ public class UserService {
     }
 
     public List<User> getUsers() {
+        logRepository.save(Log.builder().timestamp(LocalDateTime.now()).type(LogType.read).build());
         return userRepo.findAll();
+    }
+
+    public Optional<User> getFirst(){
+        logRepository.save(Log.builder().timestamp(LocalDateTime.now()).type(LogType.read).build());
+        return userRepo.findFirstByOrderByIdAsc();
     }
 
     public String sayHello() {
@@ -46,7 +52,7 @@ public class UserService {
 
     public List<User> getUsersFromGivenDepartment(String departmentName) {
         Optional<Department> departmentOpt = departmentRepo.findByName(departmentName);
-
+        logRepository.save(Log.builder().timestamp(LocalDateTime.now()).type(LogType.read).build());
         if (departmentOpt.isEmpty()) {
             return new ArrayList<>(); //
         }
