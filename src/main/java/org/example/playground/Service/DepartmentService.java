@@ -7,10 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DepartmentService {
-    private DepartmentRepo departmentRepo;
+    private final DepartmentRepo departmentRepo;
 
     @Autowired
     public DepartmentService(DepartmentRepo departmentRepo) {
@@ -19,5 +20,9 @@ public class DepartmentService {
 
     public List<Department> findAll() {
         return departmentRepo.findAll();
+    }
+
+    public Optional<Department> findByName(String name) {
+        return departmentRepo.findByName(name);
     }
 }

@@ -1,9 +1,11 @@
 package org.example.playground.Controller;
 
+import org.example.playground.Model.Department;
 import org.example.playground.Model.User;
 import org.example.playground.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,8 +35,14 @@ public class UserController {
 
     @RequestMapping("/save")
     @ResponseBody
-    public String saveUser(@RequestParam("name") String name) {
+    public String saveUser(@RequestParam("name") String name, @RequestParam(value = "department", required = false) String department) {
         userService.saveUser(User.builder().name(name).build());
         return "User " + name + " créé";
+    }
+
+    @RequestMapping("/department/{department}")
+    @ResponseBody
+    public List<User> filterByDepartment(@PathVariable String department) {
+        return userService.getUsersFromGivenDepartment(department);
     }
 }
